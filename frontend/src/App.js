@@ -5,6 +5,7 @@ import Login from './Login';
 import Buy from './Buy';
 import Sell from './Sell';
 import Rent from './Rent';
+import Cart from './Cart';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/buy" element={<Buy/>}/>
         <Route path="/sell" element={<Sell/>}/>
         <Route path="/rent" element={<Rent/>}/>
+        <Route path='/cart' element={<Cart/>}/>
       </Routes>
     </Router>
   );
