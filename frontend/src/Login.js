@@ -1,29 +1,50 @@
-// Login.js
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import './login.css'; 
+import { useNavigate } from 'react-router-dom';
+import './login.css';
+import logo from './img/logo-png.png';
 
 function Login() {
-  const [collegeId, setCollegeId] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
-  const handleLogin = () => {
-    // login logic 
-    navigate('/home');
+  const handleLogin = async () => {
+    try {
+      const response = await fetch('http://localhost:8080/api/logins', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, password }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log(data);
+        // Handle successful login
+        navigate('/home');
+      } else {
+        const errorData = await response.json();
+        console.error(errorData);
+        // Handle login error
+      }
+    } catch (error) {
+      console.error(error);
+      // Handle fetch error
+    }
   };
 
   return (
     <div className="login-container">
       <div className="login-details">
         <h2 className="login-heading">LOGIN</h2>
-        <label className="login-label">College Id:</label>
+        <label className="login-label">Username:</label>
         <input
           type="text"
           className="login-input"
-          placeholder="Enter ID"
-          value={collegeId}
-          onChange={(e) => setCollegeId(e.target.value)}
+          placeholder="Enter username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
           required
         />
         <label className="login-label">Password:</label>
@@ -35,10 +56,12 @@ function Login() {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-        <button className="login-button" onClick={handleLogin}>Login</button>
+        <button className="login-button" onClick={handleLogin}>
+          Login
+        </button>
       </div>
       <div className="login-image">
-      <img src={require('./img/logo-png.png')} alt="Login" />
+        <img src={logo} alt="Login" />
       </div>
     </div>
   );
