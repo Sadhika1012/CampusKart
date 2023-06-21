@@ -1,24 +1,28 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
+import './nav.css'
+import add from './img/add-png.png';
 
 function Home() {
   return (
     <div>
-      <h2>Home</h2>
-      <ul style={{display:"inline"}}>
-        <li>
+      <ul className='navbar'>
+        <li className='li1'>
           <Link to="/buy">Buy products</Link>
         </li>      
-        <li>
+        <li className='li1'>
           <Link to="/sell">Sell Products</Link>
         </li>
-        <li>
+        <li className='li1'>
           <Link to="/rent">Rent Products</Link>
         </li>
+        <li><Link to="/cart"><img className='img1' src={add} alt="cart" /></Link> </li>
       </ul>
     </div>
   );
 }
 
 export default Home;
+
+
+
