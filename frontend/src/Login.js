@@ -20,11 +20,17 @@ function Login() {
 
       if (response.ok) {
         const data = await response.json();
-        console.log(data);
+        
         // Handle successful login
         navigate('/home');
+        console.log(data);
+        
+        setTimeout(() => {
+          alert('Login Successful!');
+        }, 100); // Delay the alert by 100 milliseconds
       } else {
         const errorData = await response.json();
+        alert(errorData.message);
         console.error(errorData);
         // Handle login error
       }
