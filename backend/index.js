@@ -20,7 +20,7 @@ mongoose.connect("mongodb://localhost:27017/CampusKart", {
   .catch((err) => console.log(err));
 
 app.use('/api/logins', loginsRouter);
-
+app.use('/api/products', productsRouter);
 app.listen(8080, () => {
   console.log('Backend running and server up and running at 8080!');
 });
