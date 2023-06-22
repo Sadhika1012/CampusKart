@@ -1,47 +1,44 @@
 import React, { useState, useEffect } from 'react';
 
 const Buy = () => {
-  const [products, setProducts] = useState([]);
+  const [allImage, setAllImage] = useState([]);
 
   useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const response = await fetch('http://localhost:8080/api/products');
-        const data = await response.json();
-        setProducts(data);
-      } catch (error) {
-        console.error('Error fetching products:', error);
-      }
-    };
-
-    fetchProducts();
+    getImage();
   }, []);
 
-  const imageFilenames = [
-    'ardinuo1.jpg', // Product 1 image
-    'calci1.jpg', // Product 2 image
-    'crayon1.jpg',
-    'labcoat1.jpg' // Product 3 image
-  ];
+  const getImage = () => {
+    fetch("http://localhost:8080/api/products", {
+      method: "GET",
+      crossDomain: true,
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        setAllImage(data.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching images:", error);
+      });
+  };
 
   return (
     <div>
-      <h1>Product List</h1>
-      {products.map((product, index) => (
-        <div key={product._id}>
-          <h2>{product.name}</h2>
-          <img
-  src={`/images/${imageFilenames[index % imageFilenames.length]}`}
-  alt={`Image ${index + 1}`}
-  width="200"
-  height="200"
-/>
-          <p>{product.description}</p>
-          <p>{product.price}</p>
+      {allImage.map((data) => (
+        <div key={data._id}>
+          <img width={100} height={100} src={data.image} alt="Product" />
+          <p>Name: {data.name}</p>
+          <p>Description: {data.description}</p>
+          <p>Price: {data.price}</p>
           <div>
-            {product.flag === 0 && <button>Buy</button>}
-            {product.flag === 1 && <button>Rent</button>}
-            {product.flag === 2 && (
+            {data.flag === 0 && <button>Buy</button>}
+            {data.flag === 1 && <button>Rent</button>}
+            {data.flag === 2 && (
               <div>
                 <button>Buy</button>
                 <button>Rent</button>
