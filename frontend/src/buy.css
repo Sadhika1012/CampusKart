@@ -65,4 +65,7 @@
   .request-button:hover {
     background-color: #27af82;
   }
-  
+  .disabled-button {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
