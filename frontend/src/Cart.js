@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState,useEffect } from 'react';
 import { CartContext } from './CartContext';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -9,6 +9,13 @@ const Cart = () => {
   const { cartItems, removeItemFromCart, clearCart } = useContext(CartContext);
   const [rentalDurations, setRentalDurations] = useState({});
   const [orderPlaced, setOrderPlaced] = useState(false); 
+  const [loggedInUsername, setLoggedInUsername] = useState('');
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const username = localStorage.getItem('username');
+    setLoggedInUsername(username);
+  }, []);
 
   const buyItems = cartItems.filter((item) => item.action === 'buy');
   const rentItems = cartItems.filter((item) => item.action === 'rent');
@@ -39,8 +46,6 @@ const Cart = () => {
     return rentalDurations[itemId] || null;
   };
 
-  const navigate = useNavigate()
-
   const handlePlaceOrder = () => {
     // Collect order details here
     const orderDetails = {
@@ -48,13 +53,31 @@ const Cart = () => {
       rentItems,
       totalBuyPrice,
       totalRentPrice,
+      username: loggedInUsername,
     };
-
-    // Redirect to Profile page and pass order details as URL parameters
-    navigate('/profile', { state: { orderDetails } });
-
-    setOrderPlaced(true); // Set a flag to indicate that the order has been placed
+  
+    // Send the order details to the server
+    fetch('http://localhost:8080/api/orders', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(orderDetails),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data.message); // Order placed successfully!
+        setOrderPlaced(true);
+        navigate('/profile', { state: { orderDetails } });
+      })
+      .catch((error) => {
+        console.error('An error occurred while placing the order:', error);
+        // Handle error state
+      });
   };
+  
+
+  
 
   return (
     <div style={{ marginTop: '200px' }}>
