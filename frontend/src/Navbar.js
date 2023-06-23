@@ -15,6 +15,9 @@ const Navbar = () => {
       <li className='li1'>
         <Link to="/rent">Rent Products</Link>
       </li>
+    <li className='li1'>
+        <Link to="/profile">Profile</Link>
+      </li>
       <li>
         <Link to="/cart">
           <img className='img1' src={add} alt="cart" />
