@@ -15,7 +15,9 @@ router.post('/', async (req, res) => {
 
     if (user) {
       if (password === user.password) {
-        res.status(200).json({ message: 'Login Successful!', success: true });
+        res.status(200).json({ username: username, message: 'Login Successful!', success: true });
+
+        
       } else if (password !== user.password) {
         res.status(401).json({ message: "Password didn't match", success: false });
       }
