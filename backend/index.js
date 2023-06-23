@@ -4,6 +4,7 @@ const dotenv = require('dotenv');
 const cors = require('cors');
 const loginsRouter = require('./routes/logins');
 const ordersRouter=require('./routes/orders');
+const productsRouter = require('./routes/products');
 const bodyParser = require('body-parser');
 const requestsRouter = require('./routes/requests');
 dotenv.config();
