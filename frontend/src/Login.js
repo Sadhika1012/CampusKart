@@ -20,6 +20,7 @@ function Login() {
 
       if (response.ok) {
         const data = await response.json();
+        localStorage.setItem('username', data.username);
         
         // Handle successful login
         navigate('/home');
