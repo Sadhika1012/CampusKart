@@ -7,6 +7,7 @@ import Sell from './Sell';
 import Rent from './Rent';
 import Cart from './Cart';
 import Navbar from './Navbar';
+import Profile from './Profile';
 
 function App() {
   return (
@@ -43,7 +44,22 @@ function App() {
             </>
           }
         />
-        <Route path="/cart" element={<Cart />} />
+        <Route path="/cart/*"
+          element={
+            <>
+              <Navbar />
+              <Cart />
+            </>
+          }
+        />
+         <Route path="/profile/*"
+          element={
+            <>
+              <Navbar />
+              <Profile />
+            </>
+          }
+        />
       </Routes>
     </Router>
   );
