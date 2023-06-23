@@ -5,6 +5,7 @@ const cors = require('cors');
 const loginsRouter = require('./routes/logins');
 const ordersRouter=require('./routes/orders');
 const bodyParser = require('body-parser');
+const requestsRouter = require('./routes/requests');
 dotenv.config();
 
 const app = express();
@@ -24,6 +25,7 @@ mongoose.connect("mongodb://localhost:27017/CampusKart", {
 app.use('/api/logins', loginsRouter);
 app.use('/api/products', productsRouter);
 app.use('/api/orders',ordersRouter);
+app.use('/api/requests',requestsRouter);
 
 app.listen(8080, () => {
   console.log('Backend running and server up and running at 8080!');
