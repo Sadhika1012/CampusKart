@@ -3,11 +3,12 @@ import { CartContext } from './CartContext';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { addMonths } from 'date-fns';
-import { v4 as uuidv4 } from 'uuid';
+import { useNavigate } from 'react-router-dom';
 
 const Cart = () => {
   const { cartItems, removeItemFromCart, clearCart } = useContext(CartContext);
   const [rentalDurations, setRentalDurations] = useState({});
+  const [orderPlaced, setOrderPlaced] = useState(false); 
 
   const buyItems = cartItems.filter((item) => item.action === 'buy');
   const rentItems = cartItems.filter((item) => item.action === 'rent');
@@ -38,6 +39,23 @@ const Cart = () => {
     return rentalDurations[itemId] || null;
   };
 
+  const navigate = useNavigate()
+
+  const handlePlaceOrder = () => {
+    // Collect order details here
+    const orderDetails = {
+      buyItems,
+      rentItems,
+      totalBuyPrice,
+      totalRentPrice,
+    };
+
+    // Redirect to Profile page and pass order details as URL parameters
+    navigate('/profile', { state: { orderDetails } });
+
+    setOrderPlaced(true); // Set a flag to indicate that the order has been placed
+  };
+
   return (
     <div style={{ marginTop: '200px' }}>
       <h2>Cart</h2>
@@ -47,11 +65,11 @@ const Cart = () => {
           <img src={item.item.image} alt={item.item.name} style={{ width: '100px', height: '100px' }} />
           <p>Name: {item.item.name}</p>
           <p>Price: {item.item.price}</p>
-          <button onClick={() => handleRemoveItem(item._id)}>Remove</button>
+          <button onClick={() => handleRemoveItem(item.item._id)}>Remove</button>
         </div>
       ))}
       <p>Total Buy Price: {totalBuyPrice}</p>
-
+  
       <h3>Rent:</h3>
       {rentItems.map((item, index) => (
         <div key={`${item.item._id}_${index}`}>
@@ -74,14 +92,19 @@ const Cart = () => {
             minDate={new Date()} // Set minDate to current date
             maxDate={addMonths(new Date(), 1)} // Set maxDate to one month from current date
           />
-          <button onClick={() => handleRemoveItem(item._id)}>Remove</button>
+          <button onClick={() => handleRemoveItem(item.item._id)}>Remove</button>
         </div>
       ))}
       <p>Total Rent Price: {totalRentPrice}</p>
-
+      <p>Total Price: {totalBuyPrice + totalRentPrice}</p>
+      {!orderPlaced && (
+        <button onClick={handlePlaceOrder}>Place Order</button>
+      )}
+      {orderPlaced && <p>Order has been placed successfully!</p>}
       <button onClick={handleClearCart}>Clear Cart</button>
     </div>
   );
+  
 };
 
 export default Cart;
