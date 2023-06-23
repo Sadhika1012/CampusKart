@@ -4,6 +4,8 @@ import Home from './Home';
 import Login from './Login';
 import Buy from './Buy';
 import Sell from './Sell';
+import Request from './Request'
+import Requestform from './Requestform'
 import Rent from './Rent';
 import Cart from './Cart';
 import Navbar from './Navbar';
@@ -36,11 +38,11 @@ function App() {
             </>
           }
         />
-        <Route path="/rent/*"
+        <Route path="/request/*"
           element={
             <>
               <Navbar />
-              <Rent />
+              <Request />
             </>
           }
         />
@@ -49,6 +51,14 @@ function App() {
             <>
               <Navbar />
               <Cart />
+            </>
+          }
+        />
+          <Route path="/requestform/*"
+          element={
+            <>
+              <Navbar />
+              <Requestform />
             </>
           }
         />
