@@ -3,11 +3,13 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const cors = require('cors');
 const loginsRouter = require('./routes/logins');
-
+const ordersRouter=require('./routes/orders');
+const bodyParser = require('body-parser');
 dotenv.config();
 
 const app = express();
 app.use(cors());
+app.use(bodyParser.json({ limit: '10mb' }));
 app.use(express.json());
 
 mongoose.connect("mongodb://localhost:27017/CampusKart", {
@@ -21,6 +23,8 @@ mongoose.connect("mongodb://localhost:27017/CampusKart", {
 
 app.use('/api/logins', loginsRouter);
 app.use('/api/products', productsRouter);
+app.use('/api/orders',ordersRouter);
+
 app.listen(8080, () => {
   console.log('Backend running and server up and running at 8080!');
 });
