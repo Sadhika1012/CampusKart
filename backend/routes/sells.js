@@ -6,7 +6,7 @@ router.use(express.json());
 
 router.post('/', async (req, res) => {
   try {
-    const { name, description, price, image, flag } = req.body;
+    const { name, description, price, image, flag, category } = req.body;
 
     const newProduct = new Product({
       name,
@@ -14,6 +14,7 @@ router.post('/', async (req, res) => {
       price,
       image,
       flag,
+      category,
     });
 
     await newProduct.save();
