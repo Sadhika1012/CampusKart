@@ -8,6 +8,9 @@ const Buy = () => {
   const { addToCart, cartItems } = useContext(CartContext);
   const [allImage, setAllImage] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
+  const [filterType, setFilterType] = useState('all');
+  const [filterCategory, setFilterCategory] = useState('all'); // Added filterCategory state
+
   useEffect(() => {
     getImage();
   }, []);
@@ -31,13 +34,31 @@ const Buy = () => {
         console.error("Error fetching images:", error);
       });
   };
+
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
+  };
+
+  const handleFilterChange = (e) => {
+    setFilterType(e.target.value);
+  };
+
+  const handleCategoryFilterChange = (e) => {
+    setFilterCategory(e.target.value);
   };
 
   const filteredImages = allImage.filter((data) =>
     data.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  const filteredImagesByType = filterType === 'buy' || filterType === 'rent'
+    ? filteredImages.filter((data) => data.flag === (filterType === 'buy' ? 0 : 1))
+    : filteredImages;
+
+  // Apply filter based on category
+  const filteredImagesByCategory = filterCategory !== 'all'
+    ? filteredImagesByType.filter((data) => data.category === filterCategory)
+    : filteredImagesByType;
 
   const handleAddToCart = (item, action) => {
     addToCart({ item, action });
@@ -51,40 +72,52 @@ const Buy = () => {
     <div>
       <div className="search-bar">
         <input type="text" placeholder="Search" onChange={handleSearch} />
+        <select value={filterType} onChange={handleFilterChange}>
+          <option value="all">All</option>
+          <option value="buy">Buy</option>
+          <option value="rent">Rent</option>
+        </select>
+        <select value={filterCategory} onChange={handleCategoryFilterChange}>
+          <option value="all">All Categories</option>
+          <option value="Casual Stationery">Casual Stationery</option>
+          <option value="Lab Equipments">Lab Equipments</option>
+          <option value="Electronics">Electronics</option>
+        </select>
         <Link to="/requestform" className="request-button">Request</Link>
       </div>
       <div className="image-container">
         <div className="image-grid">
-      {filteredImages.map((data) => (
-        <div key={data._id} className="image-item">
-          <img width={100} height={100} src={data.image} alt="Product" />
-          <p>Name: {data.name}</p>
-          <p>Description: {data.description}</p>
-          <p>Category:{data.category}</p>
-          <p>Price: {data.price}</p>
-          <div>
-            {data.flag === 0 && (
-              <button
-                onClick={() => handleAddToCart(data, 'buy')}
-                disabled={isItemInCart(data._id)}
-              >
-                Buy
-              </button>
-            )}
-            {data.flag === 1 && (
-              <button
-                onClick={() => handleAddToCart(data, 'rent')}
-                disabled={isItemInCart(data._id)}
-              >
-                Rent
-              </button>
-            )}
-           
-          </div>
+          {filteredImagesByCategory.map((data) => (
+            <div key={data._id} className="image-item">
+              <img width={100} height={100} src={data.image} alt="Product" />
+              <p>Name: {data.name}</p>
+              <p>Description: {data.description}</p>
+              <p>Category: {data.category}</p>
+              <p>Price: {data.price}</p>
+              <div>
+                {data.flag === 0 && (
+                  <button
+                    onClick={() => handleAddToCart(data, 'buy')}
+                    disabled={isItemInCart(data._id)}
+                    className="buy-button"
+                  >
+                    Buy
+                  </button>
+                )}
+                {data.flag === 1 && (
+                  <button
+                    onClick={() => handleAddToCart(data, 'rent')}
+                    disabled={isItemInCart(data._id)}
+                    className="rent-button"
+                  >
+                    Rent
+                  </button>
+                )}
+              </div>
+            </div>
+          ))}
         </div>
-      ))}
-    </div>
-    </div>
+      </div>
     </div>
   );
 };
