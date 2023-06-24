@@ -60,6 +60,7 @@ const Buy = () => {
           <img width={100} height={100} src={data.image} alt="Product" />
           <p>Name: {data.name}</p>
           <p>Description: {data.description}</p>
+          <p>Category:{data.category}</p>
           <p>Price: {data.price}</p>
           <div>
             {data.flag === 0 && (
