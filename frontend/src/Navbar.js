@@ -15,8 +15,12 @@ const Navbar = () => {
       <li className='li1'>
         <Link to="/request">Request Products</Link>
       </li>
+    
     <li className='li1'>
         <Link to="/profile">Profile</Link>
+      </li>
+    <li className='li1'>
+        <Link to="/chat">Chat</Link>
       </li>
       <li>
         <Link to="/cart">
