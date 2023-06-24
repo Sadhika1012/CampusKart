@@ -7,6 +7,7 @@ const Seller = () => {
   const [price, setPrice] = useState('');
   const [image, setImage] = useState('');
   const [sellType, setSellType] = useState('');
+  const [category, setCategory] = useState('');
 
   const handleNameChange = (e) => {
     setName(e.target.value);
@@ -37,6 +38,10 @@ const Seller = () => {
     setSellType(e.target.value);
   };
 
+  const handleCategoryChange = (e) => {
+    setCategory(e.target.value);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -54,9 +59,9 @@ const Seller = () => {
       price: price,
       image: image,
       flag: flag,
+      category: category,
     };
-    console.log("productdata:")
-    console.log(productData);
+
     fetch('http://localhost:8080/api/sells', {
       method: 'POST',
       headers: {
@@ -94,6 +99,14 @@ const Seller = () => {
           <option value="buy">Buy</option>
           <option value="rent">Rent</option>
           <option value="both">Both</option>
+        </select>
+
+        <label htmlFor="category">Category:</label>
+        <select id="category" value={category} onChange={handleCategoryChange} required>
+          <option value="">Select Category</option>
+          <option value="Casual Stationery">Casual Stationery</option>
+          <option value="Lab Equipments">Lab Equipments</option>
+          <option value="Electronics">Electronics</option>
         </select>
 
         <label htmlFor="image">Image:</label>
