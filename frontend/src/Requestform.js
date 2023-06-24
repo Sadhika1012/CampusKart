@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import './requestform.css';
 
-
 const Requestform = () => {
   const [username, setUsername] = useState('');
   const [productName, setProductName] = useState('');
   const [description, setDescription] = useState('');
   const [requestType, setRequestType] = useState('');
- 
+  const [category, setCategory] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -22,6 +21,7 @@ const Requestform = () => {
           productname: productName,
           description,
           requesttype: requestType,
+          category,
         }),
       });
       const data = await response.json();
@@ -31,6 +31,7 @@ const Requestform = () => {
       setProductName('');
       setDescription('');
       setRequestType('');
+      setCategory('');
       alert('Your request has been sent!');
       window.location.replace('/buy');
     } catch (error) {
@@ -85,8 +86,21 @@ const Requestform = () => {
           </select>
         </div>
 
+        <div className="form-group">
+          <label htmlFor="category">Category</label>
+          <select
+            id="category"
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+          >
+            <option value="">Select</option>
+            <option value="Casual Stationery">Casual Stationery</option>
+            <option value="Lab Equipments">Lab Equipments</option>
+            <option value="Electronics">Electronics</option>
+          </select>
+        </div>
+
         <button type="submit">Submit</button>
-        
       </form>
     </div>
   );
