@@ -4,6 +4,7 @@ const dotenv = require('dotenv');
 const cors = require('cors');
 const loginsRouter = require('./routes/logins');
 const ordersRouter=require('./routes/orders');
+const sellsRouter=require('./routes/sells');
 const productsRouter = require('./routes/products');
 const bodyParser = require('body-parser');
 const requestsRouter = require('./routes/requests');
@@ -27,7 +28,7 @@ app.use('/api/logins', loginsRouter);
 app.use('/api/products', productsRouter);
 app.use('/api/orders',ordersRouter);
 app.use('/api/requests',requestsRouter);
-
+app.use('/api/sells',sellsRouter);
 app.listen(8080, () => {
   console.log('Backend running and server up and running at 8080!');
 });
