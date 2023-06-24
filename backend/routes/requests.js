@@ -15,12 +15,13 @@ router.get('/', async (req, res) => {
 // POST /api/requests
 router.post('/', async (req, res) => {
   try {
-    const { username, productname, description, requesttype } = req.body;
+    const { username, productname, description, requesttype, category } = req.body;
     const newRequest = new Request({
       username,
       productname,
       description,
       requesttype,
+      category,
     });
     await newRequest.save();
     res.status(201).json({ message: 'Request submitted successfully' });
@@ -28,13 +29,16 @@ router.post('/', async (req, res) => {
     res.status(500).json({ message: 'Failed to submit request' });
   }
 });
+
+// DELETE /api/requests/:id
 router.delete('/:id', async (req, res) => {
-    try {
-      const requestId = req.params.id;
-      await Request.findByIdAndRemove(requestId);
-      res.json({ message: 'Request deleted successfully' });
-    } catch (error) {
-      res.status(500).json({ message: 'Failed to delete request' });
-    }
-  });
+  try {
+    const requestId = req.params.id;
+    await Request.findByIdAndRemove(requestId);
+    res.json({ message: 'Request deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ message: 'Failed to delete request' });
+  }
+});
+
 module.exports = router;
