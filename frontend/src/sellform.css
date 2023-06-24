@@ -23,7 +23,8 @@ label {
 input[type='text'],
 textarea,
 input[type='number'],
-input[type='file'] {
+input[type='file'],
+select {
   width: 100%;
   padding: 10px;
   margin-top: 5px;
