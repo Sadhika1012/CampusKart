@@ -4,6 +4,7 @@ import Home from './Home';
 import Login from './Login';
 import Buy from './Buy';
 import Sell from './Sell';
+import Chat from './Chat';
 import Request from './Request'
 import Requestform from './Requestform'
 import Rent from './Rent';
@@ -59,6 +60,14 @@ function App() {
             <>
               <Navbar />
               <Requestform />
+            </>
+          }
+        />
+          <Route path="/chat/*"
+          element={
+            <>
+              <Navbar />
+              <Chat />
             </>
           }
         />
