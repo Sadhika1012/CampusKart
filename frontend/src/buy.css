@@ -1,71 +1,47 @@
-.image-grid {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr); /* Adjust the number of columns as needed */
-    grid-gap: 20px; /* Adjust the gap between images as needed */
-  }
-  
-  .image-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
-  .image-container {
-    margin-top: 200px; /* Adjust the value to add a certain distance from the top */
-  }
-  
-  .image-grid {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    grid-gap: 20px;
-  }
-  
-  .image-item {
-    text-align: center;
-  }
+.seller-container {
+  margin-top: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
-  .search-bar {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 100px;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    /* background-color: #f9f9f9; */
-    z-index: 1;
-    /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
-  }
-  
-  .search-bar input {
-    width: 1000px;
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
-  .search-bar input:focus {
-    outline: none;
-    border-color: #007bff;
-  }
-  
-  .request-button {
-    margin-left: 10px;
-    padding: 10px 20px;
-    font-size: 16px;
-    border:none;
-    border-radius: 4px;
-    background-color: #2e759b;
-    color: #fff;
-    cursor: pointer;
-  }
-  
-  .request-button:hover {
-    background-color: #27af82;
-  }
-  .disabled-button {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 400px;
+  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid #2e759b; /* Update to desired blueish color */
+  background-color: #0095ff; /* Update to desired background color */
+}
+
+label {
+  margin-top: 10px;
+}
+
+input[type='text'],
+textarea,
+input[type='number'],
+input[type='file'] {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+button[type='submit'] {
+  margin-top: 10px;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 4px;
+  background-color: #2e759b;
+  color: #fff;
+  cursor: pointer;
+}
+
+button[type='submit']:hover {
+  background-color: #27af82;
+}
