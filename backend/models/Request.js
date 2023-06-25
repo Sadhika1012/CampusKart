@@ -5,6 +5,7 @@ const RequestSchema = new mongoose.Schema({
   productname:String,
   description: String,
   requesttype:String,
+  category:String,
 });
 
 const Request = mongoose.model('Request', RequestSchema);
