@@ -33,19 +33,12 @@ mongoose.connect("mongodb://localhost:27017/CampusKart", {
   })
   .catch((err) => console.log(err));
 
-const userUserRoom = 1;
-  const userSellerRoom = 2;
-  
-  io.on("connection", (socket) => {
+io.on("connection", (socket) => {
     console.log(`User Connected: ${socket.id}`);
   
     socket.on("join_room", (data) => {
-      if (data === userUserRoom || data === userSellerRoom) {
-        socket.join(data);
-        console.log(`User with ID: ${socket.id} joined room: ${data}`);
-      } else {
-        console.log(`User with ID: ${socket.id} requested an invalid room: ${data}`);
-      }
+      socket.join(data);
+      console.log(`User with ID: ${socket.id} joined room: ${data}`);
     });
   
     socket.on("send_message", (data) => {
