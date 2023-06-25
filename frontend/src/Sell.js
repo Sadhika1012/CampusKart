@@ -32,7 +32,6 @@ const Seller = () => {
       console.log("File selection was canceled.");
     }
   };
-  
 
   const convertImageToBase64 = (file) => {
     const reader = new FileReader();
@@ -81,6 +80,9 @@ const Seller = () => {
       .then((data) => {
         console.log('Product added successfully:', data);
         // Perform any additional actions or show success message
+
+        // Redirect to /buy page
+        window.location.href = '/buy';
       })
       .catch((error) => {
         console.error('Error adding product:', error);
@@ -127,4 +129,3 @@ const Seller = () => {
 };
 
 export default Seller;
- 
