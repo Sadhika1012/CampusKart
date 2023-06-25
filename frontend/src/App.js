@@ -7,7 +7,6 @@ import Sell from './Sell';
 import Chat from './Chat';
 import Request from './Request'
 import Requestform from './Requestform'
-import Rent from './Rent';
 import Cart from './Cart';
 import Navbar from './Navbar';
 import Profile from './Profile';
