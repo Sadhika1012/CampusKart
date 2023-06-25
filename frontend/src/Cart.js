@@ -1,17 +1,16 @@
-import React, { useContext, useState,useEffect } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { CartContext } from './CartContext';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { addMonths } from 'date-fns';
-import { useNavigate } from 'react-router-dom';
-import './cart.css'
+// import { useNavigate } from 'react-router-dom';
 
 const Cart = () => {
   const { cartItems, removeItemFromCart, clearCart } = useContext(CartContext);
   const [rentalDurations, setRentalDurations] = useState({});
-  const [orderPlaced, setOrderPlaced] = useState(false); 
+  const [orderPlaced, setOrderPlaced] = useState(false);
   const [loggedInUsername, setLoggedInUsername] = useState('');
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   useEffect(() => {
     const username = localStorage.getItem('username');
@@ -69,121 +68,107 @@ const Cart = () => {
       .then((data) => {
         console.log(data.message); // Order placed successfully!
         setOrderPlaced(true);
-        navigate('/profile', { state: { orderDetails } });
+        // navigate('/profile', { state: { orderDetails } });
+        alert('Your order has been successful!'); // Show the success message
+        setTimeout(() => {
+          handleClearCart(); // Clear the cart after 3 seconds
+        }, 3000);
       })
       .catch((error) => {
         console.error('An error occurred while placing the order:', error);
         // Handle error state
       });
   };
+  
+  
 
-return (
-    <div style={{ marginTop: '200px' }}>
-      <h2 style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '16px' }}>Cart</h2>
-      <h3 style={{ fontSize: '18px', fontWeight: 'bold', marginBottom: '8px' }}>Buy:</h3>
+  return (
+    <div style={{ marginTop: '200px', textAlign: 'center' }}>
+      <h1 style={{ fontSize: '35px', marginBottom: '20px' }}>Cart</h1>
+      <h3 style={{ fontSize: '20px', marginTop: '30px' }}>Buy:</h3>
       {buyItems.map((item) => (
-        <div className="cart-item" key={item.item._id}>
+        <div key={item.item._id}>
           <img
-            className="cart-item-image"
             src={item.item.image}
             alt={item.item.name}
+            style={{ width: '100px', height: '100px', marginRight: '20px' }}
           />
-          <div className="cart-item-details">
-            <p className="cart-item-name">Name: {item.item.name}</p>
-            <p className="cart-item-price">Price: {item.item.price}</p>
-          </div>
-          <button
-            className="cart-item-remove-btn"
-            onClick={() => handleRemoveItem(item.item._id)}
-          >
-            Remove
-          </button>
+          <p style={{ fontSize: '16px', marginBottom: '5px' }}>Name: {item.item.name}</p>
+          <p style={{ fontSize: '20px', marginBottom: '5px' }}>Price: {item.item.price}</p>
+          <button onClick={() => handleRemoveItem(item.item._id)}>Remove</button>
         </div>
       ))}
-      <p className="cart-total-price">Total Buy Price: {totalBuyPrice}</p>
+      <p style={{ fontSize: '18px', marginTop: '10px' }}>Total Buy Price: {totalBuyPrice}</p>
 
-      <h3 style={{ fontSize: '18px', fontWeight: 'bold', marginBottom: '8px' }}>Rent:</h3>
+      <h3 style={{ fontSize: '20px', marginTop: '30px' }}>Rent:</h3>
       {rentItems.map((item, index) => (
-        <div className="cart-item" key={`${item.item._id}_${index}`}>
+        <div key={`${item.item.id}${index}`}>
           <img
-            className="cart-item-image"
             src={item.item.image}
             alt={item.item.name}
+            style={{ width: '100px', height: '100px', marginRight: '20px' }}
           />
-          <div className="cart-item-details">
-            <p className="cart-item-name">Name: {item.item.name}</p>
-            <p className="cart-item-price">Price: {item.item.price}</p>
-            <label
-              className="cart-item-duration-label"
-              htmlFor={`startDate_${item.item._id}_${index}`}
-            >
-              Duration:
-            </label>
-            <input
-              className="cart-item-duration-input"
-              type="text"
-              id={`startDate_${item.item._id}_${index}`}
-              value={
-                getDurationForItem(item.item._id)?.startDate ||
-                new Date().toISOString().split('T')[0]
-              }
-              onChange={(e) =>
-                handleDurationChange(
-                  item.item._id,
-                  e.target.value,
-                  getDurationForItem(item.item._id)?.endDate
-                )
-              }
-            />
-            <DatePicker
-              id={`endDate_${item.item._id}_${index}`}
-              selected={getDurationForItem(item.item._id)?.endDate || null}
-              onChange={(date) =>
-                handleDurationChange(
-                  item.item._id,
-                  getDurationForItem(item.item._id)?.startDate,
-                  date
-                )
-              }
-              dateFormat="yyyy-MM-dd"
-              placeholderText="Select a date"
-              minDate={new Date()}
-              maxDate={addMonths(new Date(), 1)}
-            />
-          </div>
-          <button
-            className="cart-item-remove-btn"
-            onClick={() => handleRemoveItem(item.item._id)}
-          >
-            Remove
-          </button>
+          <p style={{ fontSize: '16px', marginBottom: '5px' }}>Name: {item.item.name}</p>
+          <p style={{ fontSize: '14px', marginBottom: '5px' }}>Price: {item.item.price}</p>
+          <label style={{ fontSize: '14px', marginRight: '10px' }} htmlFor={`startDate_${item.item.id}${index}`}>
+            Duration:
+          </label>
+          <input
+            type="text"
+            id={`startDate_${item.item.id}${index}`}
+            value={getDurationForItem(item.item._id)?.startDate || new Date().toISOString().split('T')[0]} // Set initial value to current date if no duration is selected
+            onChange={(e) => handleDurationChange(item.item._id, e.target.value, getDurationForItem(item.item._id)?.endDate)}
+            style={{ width: '120px', marginRight: '10px', padding: '5px', fontSize: '14px' }}
+          />
+          <DatePicker
+            id={`endDate_${item.item.id}${index}`}
+            selected={getDurationForItem(item.item._id)?.endDate || null}
+            onChange={(date) => handleDurationChange(item.item._id, getDurationForItem(item.item._id)?.startDate, date)}
+            dateFormat="yyyy-MM-dd"
+            placeholderText="Select a date"
+            minDate={new Date()} // Set minDate to current date
+            maxDate={addMonths(new Date(), 1)} // Set maxDate to one month from current date
+          />
+          <button onClick={() => handleRemoveItem(item.item._id)}>Remove</button>
         </div>
       ))}
-      <p className="cart-total-price">Total Rent Price: {totalRentPrice}</p>
-      <p className="cart-total-price">Total Price: {totalBuyPrice + totalRentPrice}</p>
+      <p style={{ fontSize: '18px', marginTop: '10px' }}>Total Rent Price: {totalRentPrice}</p>
+      <p style={{ fontSize: '18px', marginTop: '10px' }}>Total Price: {totalBuyPrice + totalRentPrice}</p>
       {!orderPlaced && (
         <button
-          className="cart-action-btn"
           onClick={handlePlaceOrder}
+          style={{
+            marginTop: '20px',
+            padding: '10px 20px',
+            fontSize: '16px',
+            backgroundColor: '#4caf50',
+            color: '#fff',
+            border: 'none',
+            borderRadius: '4px',
+            cursor: 'pointer',
+          }}
         >
           Place Order
         </button>
       )}
-      {orderPlaced && (
-        <p className="order-placed-message">Order has been placed successfully!</p>
-      )}
+      {orderPlaced && <p style={{ fontSize: '18px', marginTop: '20px' }}>Order has been placed successfully!</p>}
       <button
-        className="clear-cart-btn"
         onClick={handleClearCart}
+        style={{
+          marginTop: '20px',
+          padding: '10px 20px',
+          fontSize: '16px',
+          backgroundColor: '#f44336',
+          color: '#fff',
+          border: 'none',
+          borderRadius: '4px',
+          cursor: 'pointer',
+        }}
       >
         Clear Cart
       </button>
     </div>
   );
-
-  
-
-  
 };
 
 export default Cart;
