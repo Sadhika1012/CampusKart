@@ -79,8 +79,14 @@ function App() {
             </>
           }
         />
-        <Route path="/donate/*" 
-        element={<Donate />} />
+        <Route path="/donate/*"
+          element={
+            <>
+              <Navbar />
+              <Donate />
+            </>
+          }
+        />
       </Routes>
     </Router>
   );
