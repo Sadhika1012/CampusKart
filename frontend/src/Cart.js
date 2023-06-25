@@ -4,6 +4,7 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { addMonths } from 'date-fns';
 import { useNavigate } from 'react-router-dom';
+import './cart.css'
 
 const Cart = () => {
   const { cartItems, removeItemFromCart, clearCart } = useContext(CartContext);
@@ -75,58 +76,113 @@ const Cart = () => {
         // Handle error state
       });
   };
-  
 
-  
-
-  return (
+return (
     <div style={{ marginTop: '200px' }}>
-      <h2>Cart</h2>
-      <h3>Buy:</h3>
+      <h2 style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '16px' }}>Cart</h2>
+      <h3 style={{ fontSize: '18px', fontWeight: 'bold', marginBottom: '8px' }}>Buy:</h3>
       {buyItems.map((item) => (
-        <div key={item.item._id}>
-          <img src={item.item.image} alt={item.item.name} style={{ width: '100px', height: '100px' }} />
-          <p>Name: {item.item.name}</p>
-          <p>Price: {item.item.price}</p>
-          <button onClick={() => handleRemoveItem(item.item._id)}>Remove</button>
+        <div className="cart-item" key={item.item._id}>
+          <img
+            className="cart-item-image"
+            src={item.item.image}
+            alt={item.item.name}
+          />
+          <div className="cart-item-details">
+            <p className="cart-item-name">Name: {item.item.name}</p>
+            <p className="cart-item-price">Price: {item.item.price}</p>
+          </div>
+          <button
+            className="cart-item-remove-btn"
+            onClick={() => handleRemoveItem(item.item._id)}
+          >
+            Remove
+          </button>
         </div>
       ))}
-      <p>Total Buy Price: {totalBuyPrice}</p>
-  
-      <h3>Rent:</h3>
+      <p className="cart-total-price">Total Buy Price: {totalBuyPrice}</p>
+
+      <h3 style={{ fontSize: '18px', fontWeight: 'bold', marginBottom: '8px' }}>Rent:</h3>
       {rentItems.map((item, index) => (
-        <div key={`${item.item._id}_${index}`}>
-          <img src={item.item.image} alt={item.item.name} style={{ width: '100px', height: '100px' }} />
-          <p>Name: {item.item.name}</p>
-          <p>Price: {item.item.price}</p>
-          <label htmlFor={`startDate_${item.item._id}_${index}`}>Duration:</label>
-          <input
-            type="text"
-            id={`startDate_${item.item._id}_${index}`}
-            value={getDurationForItem(item.item._id)?.startDate || new Date().toISOString().split('T')[0]} // Set initial value to current date if no duration is selected
-            onChange={(e) => handleDurationChange(item.item._id, e.target.value, getDurationForItem(item.item._id)?.endDate)}
+        <div className="cart-item" key={`${item.item._id}_${index}`}>
+          <img
+            className="cart-item-image"
+            src={item.item.image}
+            alt={item.item.name}
           />
-          <DatePicker
-            id={`endDate_${item.item._id}_${index}`}
-            selected={getDurationForItem(item.item._id)?.endDate || null}
-            onChange={(date) => handleDurationChange(item.item._id, getDurationForItem(item.item._id)?.startDate, date)}
-            dateFormat="yyyy-MM-dd"
-            placeholderText="Select a date"
-            minDate={new Date()} // Set minDate to current date
-            maxDate={addMonths(new Date(), 1)} // Set maxDate to one month from current date
-          />
-          <button onClick={() => handleRemoveItem(item.item._id)}>Remove</button>
+          <div className="cart-item-details">
+            <p className="cart-item-name">Name: {item.item.name}</p>
+            <p className="cart-item-price">Price: {item.item.price}</p>
+            <label
+              className="cart-item-duration-label"
+              htmlFor={`startDate_${item.item._id}_${index}`}
+            >
+              Duration:
+            </label>
+            <input
+              className="cart-item-duration-input"
+              type="text"
+              id={`startDate_${item.item._id}_${index}`}
+              value={
+                getDurationForItem(item.item._id)?.startDate ||
+                new Date().toISOString().split('T')[0]
+              }
+              onChange={(e) =>
+                handleDurationChange(
+                  item.item._id,
+                  e.target.value,
+                  getDurationForItem(item.item._id)?.endDate
+                )
+              }
+            />
+            <DatePicker
+              id={`endDate_${item.item._id}_${index}`}
+              selected={getDurationForItem(item.item._id)?.endDate || null}
+              onChange={(date) =>
+                handleDurationChange(
+                  item.item._id,
+                  getDurationForItem(item.item._id)?.startDate,
+                  date
+                )
+              }
+              dateFormat="yyyy-MM-dd"
+              placeholderText="Select a date"
+              minDate={new Date()}
+              maxDate={addMonths(new Date(), 1)}
+            />
+          </div>
+          <button
+            className="cart-item-remove-btn"
+            onClick={() => handleRemoveItem(item.item._id)}
+          >
+            Remove
+          </button>
         </div>
       ))}
-      <p>Total Rent Price: {totalRentPrice}</p>
-      <p>Total Price: {totalBuyPrice + totalRentPrice}</p>
+      <p className="cart-total-price">Total Rent Price: {totalRentPrice}</p>
+      <p className="cart-total-price">Total Price: {totalBuyPrice + totalRentPrice}</p>
       {!orderPlaced && (
-        <button onClick={handlePlaceOrder}>Place Order</button>
+        <button
+          className="cart-action-btn"
+          onClick={handlePlaceOrder}
+        >
+          Place Order
+        </button>
       )}
-      {orderPlaced && <p>Order has been placed successfully!</p>}
-      <button onClick={handleClearCart}>Clear Cart</button>
+      {orderPlaced && (
+        <p className="order-placed-message">Order has been placed successfully!</p>
+      )}
+      <button
+        className="clear-cart-btn"
+        onClick={handleClearCart}
+      >
+        Clear Cart
+      </button>
     </div>
   );
+
+  
+
   
 };
 
