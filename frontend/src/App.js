@@ -9,7 +9,8 @@ import Request from './Request'
 import Requestform from './Requestform'
 import Cart from './Cart';
 import Navbar from './Navbar';
-
+import FAQ from './FAQ';
+import Donate from './Donate';
 
 function App() {
   return (
@@ -70,7 +71,16 @@ function App() {
             </>
           }
         />
-        
+         <Route path="/faq/*"
+          element={
+            <>
+              <Navbar />
+              <FAQ />
+            </>
+          }
+        />
+        <Route path="/donate/*" 
+        element={<Donate />} />
       </Routes>
     </Router>
   );

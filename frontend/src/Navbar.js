@@ -15,8 +15,15 @@ const Navbar = () => {
       <li className='li1'>
         <Link to="/request">Request Products</Link>
       </li>
+    
+    <li className='li1'>
+        <Link to="/faq">FAQs</Link>
+      </li>
     <li className='li1'>
         <Link to="/chat">Chat</Link>
+      </li>
+      <li className='li1'>
+        <Link to="/donate">Donate</Link> {/* Added Donate button */}
       </li>
       <li>
         <Link to="/cart">
