@@ -3,13 +3,13 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const cors = require('cors');
 const loginsRouter = require('./routes/logins');
-const ordersRouter=require('./routes/orders');
-const sellsRouter=require('./routes/sells');
 const productsRouter = require('./routes/products');
+const ordersRouter=require('./routes/orders');
 const bodyParser = require('body-parser');
 const requestsRouter = require('./routes/requests');
 const { Server } = require("socket.io");
 const http = require('http');
+const donatesRouter = require('./routes/donates');
 dotenv.config();
 
 const app = express();
@@ -23,7 +23,6 @@ const io = new Server(server, {
     methods: ["GET", "POST"],
   },
 });
-
 mongoose.connect("mongodb://localhost:27017/CampusKart", {
     useNewUrlParser: true,
     useUnifiedTopology: true
@@ -33,7 +32,7 @@ mongoose.connect("mongodb://localhost:27017/CampusKart", {
   })
   .catch((err) => console.log(err));
 
-io.on("connection", (socket) => {
+  io.on("connection", (socket) => {
     console.log(`User Connected: ${socket.id}`);
   
     socket.on("join_room", (data) => {
@@ -49,12 +48,16 @@ io.on("connection", (socket) => {
       console.log("User Disconnected", socket.id);
     });
   });
+  
+  
+  
 
 app.use('/api/logins', loginsRouter);
 app.use('/api/products', productsRouter);
 app.use('/api/orders',ordersRouter);
 app.use('/api/requests',requestsRouter);
-app.use('/api/sells',sellsRouter);
+app.use('/api/donates',donatesRouter);
+
 server.listen(8080, () => {
   console.log('Backend running and server up and running at 8080!');
 });
