@@ -22,9 +22,17 @@ const Seller = () => {
   };
 
   const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    convertImageToBase64(file);
+    const files = e.target.files;
+    if (files.length > 0) {
+      const file = files[0];
+      convertImageToBase64(file);
+    } else {
+      // File selection was canceled, handle it accordingly
+      // For example, you can reset any previous image data or show a message to the user
+      console.log("File selection was canceled.");
+    }
   };
+  
 
   const convertImageToBase64 = (file) => {
     const reader = new FileReader();
