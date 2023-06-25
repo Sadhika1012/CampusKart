@@ -27,8 +27,6 @@ const Seller = () => {
       const file = files[0];
       convertImageToBase64(file);
     } else {
-      // File selection was canceled, handle it accordingly
-      // For example, you can reset any previous image data or show a message to the user
       console.log("File selection was canceled.");
     }
   };
@@ -44,11 +42,9 @@ const Seller = () => {
   const handleSellTypeChange = (e) => {
     setSellType(e.target.value);
   };
-
   const handleCategoryChange = (e) => {
     setCategory(e.target.value);
   };
-
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -66,9 +62,9 @@ const Seller = () => {
       price: price,
       image: image,
       flag: flag,
-      category: category,
+      category:category,
     };
-
+    
     fetch('http://localhost:8080/api/sells', {
       method: 'POST',
       headers: {
@@ -80,8 +76,6 @@ const Seller = () => {
       .then((data) => {
         console.log('Product added successfully:', data);
         // Perform any additional actions or show success message
-
-        // Redirect to /buy page
         window.location.href = '/buy';
       })
       .catch((error) => {
@@ -93,24 +87,31 @@ const Seller = () => {
   return (
     <div className="seller-container">
       <h2>Sell an Item</h2>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="name">Name:</label>
-        <input type="text" id="name" value={name} onChange={handleNameChange} required />
+      <form onSubmit={handleSubmit} className="form1">
+        <label htmlFor="name" className="label1">
+          Name:
+        </label>
+        <input type="text" id="name" value={name} onChange={handleNameChange} className='input1' required />
 
-        <label htmlFor="description">Description:</label>
-        <textarea id="description" value={description} onChange={handleDescriptionChange} required />
+        <label htmlFor="description" className="label1">
+          Description:
+        </label>
+        <textarea id="description" value={description} onChange={handleDescriptionChange} className='textarea1' required />
 
-        <label htmlFor="price">Price:</label>
-        <input type="number" id="price" value={price} onChange={handlePriceChange} required />
+        <label htmlFor="price" className="label1">
+          Price:
+        </label>
+        <input type="number" id="price" value={price} onChange={handlePriceChange} className='input2' required />
 
-        <label htmlFor="sellType">Sell Type:</label>
+        <label htmlFor="sellType" className="label1">
+          Sell Type:
+        </label>
         <select id="sellType" value={sellType} onChange={handleSellTypeChange} required>
           <option value="">Select Sell Type</option>
           <option value="buy">Buy</option>
           <option value="rent">Rent</option>
           <option value="both">Both</option>
         </select>
-
         <label htmlFor="category">Category:</label>
         <select id="category" value={category} onChange={handleCategoryChange} required>
           <option value="">Select Category</option>
@@ -119,10 +120,14 @@ const Seller = () => {
           <option value="Electronics">Electronics</option>
         </select>
 
-        <label htmlFor="image">Image:</label>
-        <input type="file" id="image" onChange={handleImageChange} accept="image/*" required />
+        <label htmlFor="image" className="label1">
+          Image:
+        </label>
+        <input type="file" id="image" onChange={handleImageChange} accept="image/*" className='input3' required />
 
-        <button type="submit">Submit</button>
+        <button type="submit" className="button1">
+          Submit
+        </button>
       </form>
     </div>
   );
