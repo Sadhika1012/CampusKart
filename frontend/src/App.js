@@ -9,7 +9,7 @@ import Request from './Request'
 import Requestform from './Requestform'
 import Cart from './Cart';
 import Navbar from './Navbar';
-import Profile from './Profile';
+
 
 function App() {
   return (
@@ -70,14 +70,7 @@ function App() {
             </>
           }
         />
-         <Route path="/profile/*"
-          element={
-            <>
-              <Navbar />
-              <Profile />
-            </>
-          }
-        />
+        
       </Routes>
     </Router>
   );
