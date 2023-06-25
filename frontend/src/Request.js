@@ -50,6 +50,7 @@ const Request = () => {
               <p>Product Name: {request.productname}</p>
               <p>Description: {request.description}</p>
               <p>Request Type: {request.requesttype}</p>
+              <p>Category:{request.category}</p>
               <button
                 className="provide-button"
                 onClick={() => handleProvideClick(request._id)}
@@ -61,7 +62,7 @@ const Request = () => {
           ))}
         </div>
       ) : (
-        <p>No requests found.</p>
+       <div className="nothing"> <p><br></br>No requests found.</p></div>
       )}
     </div>
   );
