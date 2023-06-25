@@ -23,7 +23,7 @@ const io = new Server(server, {
     methods: ["GET", "POST"],
   },
 });
-mongoose.connect("mongodb://localhost:27017/CampusKart", {
+mongoose.connect(process.env.MONGO_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true
   })
