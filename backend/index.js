@@ -7,6 +7,7 @@ const productsRouter = require('./routes/products');
 const ordersRouter=require('./routes/orders');
 const bodyParser = require('body-parser');
 const requestsRouter = require('./routes/requests');
+const sellsRouter=require('./routes/sells');
 const { Server } = require("socket.io");
 const http = require('http');
 const donatesRouter = require('./routes/donates');
@@ -23,7 +24,7 @@ const io = new Server(server, {
     methods: ["GET", "POST"],
   },
 });
-mongoose.connect(process.env.MONGO_URL, {
+mongoose.connect("mongodb://localhost:27017/CampusKart", {
     useNewUrlParser: true,
     useUnifiedTopology: true
   })
@@ -56,6 +57,7 @@ app.use('/api/logins', loginsRouter);
 app.use('/api/products', productsRouter);
 app.use('/api/orders',ordersRouter);
 app.use('/api/requests',requestsRouter);
+app.use('/api/sells',sellsRouter);
 app.use('/api/donates',donatesRouter);
 
 server.listen(8080, () => {
